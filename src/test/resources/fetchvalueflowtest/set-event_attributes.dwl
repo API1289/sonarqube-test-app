@@ -1,0 +1,5 @@
+{
+	"queryParams" : {
+		"flightId" : "1"
+	}
+}

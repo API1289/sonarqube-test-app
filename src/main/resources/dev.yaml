@@ -1,0 +1,11 @@
+http:
+  port: "8081"
+  listener:
+    path: "/api/v1/example"
+    
+database:
+  host: "mudb.learn.mulesoft.com"
+  port: "3306"
+  username: "mule"
+  password: "mule"
+  dbName: "training"

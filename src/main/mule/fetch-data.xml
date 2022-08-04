@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<sub-flow name="fetch-all-values-flow" doc:id="ea33afbd-ce97-476c-b79a-cef36cb8712e" >
+		<logger level="DEBUG" doc:name="DEBUG: Started Fetch All Values Flow" doc:id="50160323-a8e7-4945-a0c1-06f0262eaf88" message="Started Fetch All Values Flow: #[payload]"/>
+		<db:select doc:name="Select All From Flights" doc:id="736f85ff-d152-45b0-bce7-413bac190511" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT *
+FROM flights;]]></db:sql>
+		</db:select>
+		<set-payload value="#[output application/json --- payload]" doc:name="Java to JSON" doc:id="ae31a09f-921a-4e07-bea7-c3bdaf76db48" />
+		<logger level="DEBUG" doc:name="DEBUG: Ended Fetch All Values Flow" doc:id="80cfa93d-5ede-4df8-93ff-dd00ad65c49d" message="Ended Fetch All Values Flow: #[payload]"/>
+	</sub-flow>
+	<sub-flow name="fetch-value-flow" doc:id="1f97be9b-077b-48b3-a1dd-1caef2d67bb4" >
+		<logger level="DEBUG" doc:name="DEBUG: Started Fetch Value Flow" doc:id="6d0fb339-4223-4c24-a148-ef2aaafa3f62" message="Started Fetch Value Flow: #[payload]" />
+		<db:select doc:name="Select Flight Based On ID" doc:id="9943408a-3823-4362-b621-37a5f30bf0a5" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT *
+FROM flights
+WHERE ID = :flightId ;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	"flightId" : attributes.queryParams.flightId
+}]]]></db:input-parameters>
+		</db:select>
+		<set-payload value="#[output application/json --- payload[0]]" doc:name="Java[0] to JSON" doc:id="79a26168-f2b4-4eed-a521-dc0d4e4f2fe3" />
+		<logger level="DEBUG" doc:name="DEBUG: Ended Fetch Value Flow" doc:id="7c53af7b-f87b-45ed-991e-ae2310c82616" message="Ended Fetch Value Flow: #[payload]" />
+	</sub-flow>
+</mule>
