@@ -7,7 +7,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
 	<flow name="router-main" doc:id="18fa87ab-92ba-4368-8f22-2fffd07aa92e" >
 		<http:listener doc:name="/api/v1/example" doc:id="1e2c7982-4705-466f-ac2b-4b33351d3edf" config-ref="HTTP_Listener_config" path="${http.listener.path}"/>
-		<logger level="INFO" doc:name="Start Router Main Flow" doc:id="9bc05ed2-f6f0-4315-b16a-49461d85d0b7" message="Start Router Main Flow"/>
+		<logger level="INFO" doc:name="Start Router Main Flow" doc:id="9bc05ed2-f6f0-4315-b16a-49461d85d0b7" message="Start Router Main Flow" category="INFO"/>
 		<choice doc:name="Fetch all or one ?" doc:id="bac905a9-6ba4-4b8a-aa08-0e48ca539f56" >
 			<when expression="#[isEmpty(attributes.queryParams.flightId)]">
 				<flow-ref doc:name="fetch-all-values-flow" doc:id="a625a86d-82f3-43c1-88e2-98ce393a61e8" name="fetch-all-values-flow"/>
@@ -16,6 +16,6 @@ http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/m
 				<flow-ref doc:name="fetch-value-flow" doc:id="65b4d7c2-7d7f-429f-bd67-eae539a572ad" name="fetch-value-flow"/>
 			</otherwise>
 		</choice>
-		<logger level="INFO" doc:name="End Router Main Flow" doc:id="338075f4-9023-4c9b-a253-b5e00acbd9af" message="End Router Main Flow"/>
+		<logger level="INFO" doc:name="End Router Main Flow" doc:id="338075f4-9023-4c9b-a253-b5e00acbd9af" message="End Router Main Flow" category="INFO"/>
 	</flow>
 </mule>
